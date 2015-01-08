@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;TRACK_FULLY_EXPLORED
 E:\Users\Joshua\Documents\Visual Studio 2013\Projects\OthelloGame3\OthelloGame\OthelloGame\App.xaml
-3777998678
+41171169988
 
-63164183986
+68-707806064
 142053057137
-GameTile.xaml;MainWindow.xaml;MinimaxTreeView.xaml;
+GameTile.xaml;MainWindow.xaml;MinimaxTreeView.xaml;PlayerSelection.xaml;
 
 False
 

@@ -12,9 +12,9 @@ TRACE;TRACK_FULLY_EXPLORED CHEATS DEBUG_STATS_ONLY RUN_TESTS
 E:\Users\Joshua\Documents\Visual Studio 2013\Projects\OthelloGame3\OthelloGame\OthelloGame\App.xaml
 41171169988
 
-72122440525
+72285037307
 142053057137
 GameTile.xaml;MainWindow.xaml;MinimaxTreeView.xaml;PlayerSelection.xaml;
 
-False
+True
 

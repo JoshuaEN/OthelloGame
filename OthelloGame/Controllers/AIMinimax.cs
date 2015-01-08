@@ -241,7 +241,7 @@ namespace OthelloGame.Controllers
                 }
 
             }
-
+#if FIX_LATER
             #region Check for transpositions
             // This region deals with looking for transpositions of the current moves available, 
             // and if found, recording them and removing all but one from the moves to be evaluated.
@@ -301,7 +301,7 @@ namespace OthelloGame.Controllers
 
             }
             #endregion
-
+#endif
             // Moves are actually trimmed after transpositions are removed, as transpositions are just free trims.
             if (MoveTrimming && MoveTrimTo < moves.Count)
             {
@@ -367,6 +367,7 @@ namespace OthelloGame.Controllers
                 var move_info = new Minimax.MoveInfo(item.Value.weight);
                 weights.Add(item.Key, move_info);
 
+#if FIX_LATER
                 // Check if any transpositions exist, and if so expand out the results for each of the transpositions.
                 List<int> transpoitions;
                 if (transpositions_lookup.TryGetValue(item.Key, out transpoitions))
@@ -376,11 +377,15 @@ namespace OthelloGame.Controllers
                         weights.Add(iitem, move_info);
                     }
                 }
-
+#endif
 #if DEBUG || DEBUG_STATS_ONLY
                 data_set.found_nodes += item.Value.found_nodes;
                 data_set.endpoints += item.Value.endpoints;
                 data_set.nodes += item.Value.nodes;
+#endif
+
+#if DEBUG
+                data_set.subsets.Add(item.Value);
 #endif
             }
 
@@ -495,7 +500,7 @@ namespace OthelloGame.Controllers
         public override string UniqueIdentString()
         {
             return
-                "AIMinimax|0.29|C#||" +
+                "AIMinimax|0.30|C#||" +
                 "MoveTrimming:" + MoveTrimming + ";" +
                 "MoveTrimTo:" + MoveTrimTo + ";" +
                 "Depth:" + Depth + ";" +

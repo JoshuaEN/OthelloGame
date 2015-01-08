@@ -43,6 +43,16 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Final|AnyCPU'">
+    <OutputPath>bin\Final\</OutputPath>
+    <DefineConstants>CHEATS DEBUG_STATS_ONLY</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -83,6 +93,7 @@
     <Compile Include="Exceptions\OthelloGameExceptionBase.cs" />
     <Compile Include="MoveSelectors\Adaptive.cs" />
     <Compile Include="MoveSelectors\Adaptive_EM.cs" />
+    <Compile Include="MoveSelectors\Adaptive_V2.cs" />
     <Compile Include="MoveSelectors\Adaptive_V2_EM.cs" />
     <Compile Include="MoveSelectors\Best.cs" />
     <Compile Include="MoveSelectors\IMoveSelector.cs" />
@@ -107,7 +118,6 @@
       <DependentUpon>PlayerSelection.xaml</DependentUpon>
     </Compile>
     <Compile Include="Settings.cs" />
-    <Compile Include="Tiebreaks\ExplorationStatus.cs" />
     <Compile Include="Tiebreaks\FirstIndex.cs" />
     <Compile Include="Tiebreaks\ITiebreak.cs" />
     <Compile Include="Tiebreaks\RandomTiebreak.cs" />

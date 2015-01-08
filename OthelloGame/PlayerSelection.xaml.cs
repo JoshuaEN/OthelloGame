@@ -174,14 +174,14 @@ namespace OthelloGame
         {
             var controller = new Controllers.AIMinimax(game, player);
 
-            controller.Tiebreak = new Tiebreaks.ExplorationStatus();
-            controller.Weighting = new Weighting.TieredWeighting();
+            controller.Tiebreak = new Tiebreaks.TileWeight();
+            controller.Weighting = new Weighting.TieredWeightingCompressed_R2();
             controller.EndgameWeighting = new EndgameWeighting.DiskMaximizing();
 
             if (tbAI.IsSelected)
             {
                 if (rdbCruel.IsChecked == true)
-                    controller.MoveSelector = new MoveSelectors.Adaptive_R21();
+                    controller.MoveSelector = new MoveSelectors.Adaptive_V2_R2();
                 else if (rdbHard.IsChecked == true)
                     controller.MoveSelector = new MoveSelectors.Best();
                 else if (rdbEasy.IsChecked == true)

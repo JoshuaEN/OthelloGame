@@ -16,3 +16,5 @@ E:\Users\Joshua\Documents\Visual Studio 2013\Projects\OthelloGame3\OthelloGame\O
 E:\Users\Joshua\Documents\Visual Studio 2013\Projects\OthelloGame3\OthelloGame\OthelloGame\obj\Debug\OthelloGame.csproj.GenerateResource.Cache
 E:\Users\Joshua\Documents\Visual Studio 2013\Projects\OthelloGame3\OthelloGame\OthelloGame\obj\Debug\OthelloGame.exe
 E:\Users\Joshua\Documents\Visual Studio 2013\Projects\OthelloGame3\OthelloGame\OthelloGame\obj\Debug\OthelloGame.pdb
+E:\Users\Joshua\Documents\Visual Studio 2013\Projects\OthelloGame3\OthelloGame\OthelloGame\obj\Debug\PlayerSelection.baml
+E:\Users\Joshua\Documents\Visual Studio 2013\Projects\OthelloGame3\OthelloGame\OthelloGame\obj\Debug\PlayerSelection.g.cs

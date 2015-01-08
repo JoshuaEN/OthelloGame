@@ -91,7 +91,7 @@
 
                 <Label x:Name="lblPlayer1GameInfo" x:FieldModifier="public" Content="Player One" HorizontalAlignment="Right" Margin="0" VerticalAlignment="Top" Grid.Row="1" Grid.Column="0"/>
                 <Label x:Name="lblPlayer2GameInfo" x:FieldModifier="public" Content="Player Two" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top" Grid.Row="1" Grid.Column="2"/>
-                <Button Content="Minimax Tree" HorizontalAlignment="Right" Margin="5" VerticalAlignment="Center" Width="100" Grid.Row="1" Grid.Column="2" Click="Button_Click" Focusable="False" Visibility="Collapsed"/>
+                <Button x:Name="btnTreeview" Content="Minimax Tree" HorizontalAlignment="Right" Margin="5" VerticalAlignment="Center" Width="100" Grid.Row="1" Grid.Column="2" Click="Button_Click" Focusable="False" Visibility="Collapsed"/>
                 <Button Content="Menu" HorizontalAlignment="Left" Margin="5,4,0,4" VerticalAlignment="Center" Width="51" Grid.Row="0" Grid.Column="0" Background="White" BorderBrush="#FFBDBDBD" BorderThickness="0" FontSize="14" Click="Button_Click_3" ContextMenuService.Placement="Bottom" Focusable="False">
                     <Button.ContextMenu>
                         <ContextMenu x:Name="ctmMain" StaysOpen="False" Placement="Bottom">
@@ -105,7 +105,7 @@
                 </Button>
             </Grid>
 
-            <Label x:Name="lblDebugInfo" Content="Label" HorizontalAlignment="Right" Margin="0" VerticalAlignment="Bottom" Background="White"/>
+            <Label x:Name="lblDebugInfo" Content="Label" HorizontalAlignment="Right" Margin="0" VerticalAlignment="Bottom" Background="White" Visibility="Collapsed"/>
         </Grid>
 
         <Grid x:Name="grdOverlay" Background="#19000000" Visibility="Collapsed">

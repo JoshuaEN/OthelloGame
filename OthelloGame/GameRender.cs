@@ -161,7 +161,11 @@ namespace OthelloGame
             {
                 var tile = GameTiles[i];
                 tile.HeaderText = "";
+#if DEBUG
                 tile.FooterText = i + " | " + Game.BoardWeights[i];
+#else
+                tile.FooterText = i.ToString();
+#endif
                 tile.HighlightMode = GameTile.HighlightModes.None;
 
                 if (HighlightValidMoves && Game.ValidMoves.IndexOf(i) != -1)
