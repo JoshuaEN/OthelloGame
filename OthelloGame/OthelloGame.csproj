@@ -1,0 +1,197 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{E3E9F74D-579F-4DA7-A218-C2E1F9195183}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>OthelloGame</RootNamespace>
+    <AssemblyName>OthelloGame</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;TRACK_FULLY_EXPLORED</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE;TRACK_FULLY_EXPLORED CHEATS DEBUG_STATS_ONLY RUN_TESTS</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release_GUI|AnyCPU'">
+    <OutputPath>bin\Release_GUI\</OutputPath>
+    <DefineConstants>TRACE;CHEATS TRACK_FULLY_EXPLORED AI_DEBUG_MODE DEBUG_STATS_ONLY</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="EndgameWeighting\DiskMaximizing.cs" />
+    <Compile Include="EndgameWeighting\EndgameWeightingBase.cs" />
+    <Compile Include="EndgameWeighting\WinLossTie.cs" />
+    <Compile Include="Events\GameBoardAdvancedEventArgs.cs" />
+    <Compile Include="Events\GameStateChangedEventArgs.cs" />
+    <Compile Include="Events\GameTurnAdvancedEventArgs.cs" />
+    <Compile Include="Events\MoveBaseEventArgs.cs" />
+    <Compile Include="Events\MoveInvalidEventArgs.cs" />
+    <Compile Include="Events\MoveValidEventArgs.cs" />
+    <Compile Include="Events\OthelloGameBaseEventArgs.cs" />
+    <Compile Include="Events\PlayerCalculatedEventArgs.cs" />
+    <Compile Include="Events\PlayerCalculatingEventArgs.cs" />
+    <Compile Include="Events\PlayerReadyToMoveEventArgs.cs" />
+    <Compile Include="Events\TileChangedEventArgs.cs" />
+    <Compile Include="Exceptions\LogicError.cs" />
+    <Compile Include="Exceptions\OthelloGameExceptionBase.cs" />
+    <Compile Include="MoveSelectors\Adaptive.cs" />
+    <Compile Include="MoveSelectors\Adaptive_EM.cs" />
+    <Compile Include="MoveSelectors\Adaptive_V2_EM.cs" />
+    <Compile Include="MoveSelectors\Best.cs" />
+    <Compile Include="MoveSelectors\IMoveSelector.cs" />
+    <Compile Include="MoveSelectors\RandomErrors\RandomErrorBase.cs" />
+    <Compile Include="MoveSelectors\RandomErrors\RandomError_Ra_T1.cs" />
+    <Compile Include="MoveSelectors\RandomErrors\RandomError_Ra_T10.cs" />
+    <Compile Include="MoveSelectors\RandomErrors\RandomError_Ra_T2.cs" />
+    <Compile Include="MoveSelectors\RandomErrors\RandomError_Ra_T3.cs" />
+    <Compile Include="MoveSelectors\RandomErrors\RandomError_Ra_T5.cs" />
+    <Compile Include="MoveSelectors\RandomErrors\RandomError_Re_T1.cs" />
+    <Compile Include="MoveSelectors\RandomErrors\RandomError_Re_T2.cs" />
+    <Compile Include="MoveSelectors\RandomErrors\RandomError_Re_T3.cs" />
+    <Compile Include="MoveSelectors\RandomErrors\RandomError_Rl_T1.cs" />
+    <Compile Include="MoveSelectors\RandomErrors\RandomError_Rl_T2.cs" />
+    <Compile Include="MoveSelectors\RandomErrors\RandomError_Rl_T3.cs" />
+    <Compile Include="MoveSelectors\RandomErrors\RandomError_Rm_T1.cs" />
+    <Compile Include="MoveSelectors\RandomErrors\RandomError_Rm_T2.cs" />
+    <Compile Include="MoveSelectors\RandomErrors\RandomError_Rm_T3.cs" />
+    <Compile Include="MoveSelectors\RandomMove.cs" />
+    <Compile Include="MoveSelectors\Worst.cs" />
+    <Compile Include="PlayerSelection.xaml.cs">
+      <DependentUpon>PlayerSelection.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Settings.cs" />
+    <Compile Include="Tiebreaks\ExplorationStatus.cs" />
+    <Compile Include="Tiebreaks\FirstIndex.cs" />
+    <Compile Include="Tiebreaks\ITiebreak.cs" />
+    <Compile Include="Tiebreaks\RandomTiebreak.cs" />
+    <Compile Include="Tiebreaks\TileWeight.cs" />
+    <Compile Include="Weighting\Adaptive.cs" />
+    <Compile Include="Weighting\DiskDifference.cs" />
+    <Compile Include="Weighting\FrontierDiskRatio.cs" />
+    <Compile Include="Weighting\InvertedTieredWeighting.cs" />
+    <Compile Include="Weighting\StableDiskRatio.cs" />
+    <Compile Include="Weighting\TieredWeighting.cs" />
+    <Compile Include="Weighting\TieredWeightingCompressed.cs" />
+    <Compile Include="Weighting\TieredWeightingCompressedV2.cs" />
+    <Compile Include="Weighting\WeightingBase.cs" />
+    <Page Include="GameTile.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="AITest.cs" />
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\AIMinimax.cs" />
+    <Compile Include="Controllers\ControllerBase.cs" />
+    <Compile Include="Game.cs" />
+    <Compile Include="GameRender.cs" />
+    <Compile Include="GameTile.xaml.cs">
+      <DependentUpon>GameTile.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Globals.cs" />
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="MinimaxTreeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PlayerSelection.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Minimax.cs" />
+    <Compile Include="MinimaxTreeView.xaml.cs">
+      <DependentUpon>MinimaxTreeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

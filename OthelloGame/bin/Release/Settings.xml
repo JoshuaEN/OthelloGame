@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Settings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <UseSavedControllers>true</UseSavedControllers>
+  <Player1IsCruel>true</Player1IsCruel>
+  <Player1IsSmart>false</Player1IsSmart>
+  <Player1IsConfused>false</Player1IsConfused>
+  <Player1Depth>6</Player1Depth>
+  <Player1IsAI>true</Player1IsAI>
+  <Player1IsHuman>false</Player1IsHuman>
+  <Player2IsCruel>true</Player2IsCruel>
+  <Player2IsSmart>false</Player2IsSmart>
+  <Player2IsConfused>false</Player2IsConfused>
+  <Player2Depth>6</Player2Depth>
+  <Player2IsAI>false</Player2IsAI>
+  <Player2IsHuman>true</Player2IsHuman>
+</Settings>
