@@ -181,7 +181,7 @@ namespace OthelloGame
             if (tbAI.IsSelected)
             {
                 if (rdbCruel.IsChecked == true)
-                    controller.MoveSelector = new MoveSelectors.Adaptive_V2_R2();
+                    controller.MoveSelector = new MoveSelectors.Adaptive_V3_R9();
                 else if (rdbHard.IsChecked == true)
                     controller.MoveSelector = new MoveSelectors.Best();
                 else if (rdbEasy.IsChecked == true)

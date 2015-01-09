@@ -241,67 +241,7 @@ namespace OthelloGame.Controllers
                 }
 
             }
-#if FIX_LATER
-            #region Check for transpositions
-            // This region deals with looking for transpositions of the current moves available, 
-            // and if found, recording them and removing all but one from the moves to be evaluated.
-            // This step can see significant performance improvements because, unlike when dealing with a single thread,
-            // top level transpositions are never found (as all work is done concurrently).
-            // This can waste valuable processor time.
 
-            // The lookup table for the transpositions found below, all ints are board indexes. The key is the one which is evaluated.
-            var transpositions_lookup = new Dictionary<int, List<int>>();
-
-            // List of moves that need to be checked still; moves are removed from this list once they no longer need to be checked.
-            var moves_to_check = new List<int>(moves);
-
-            #region Transposition Checker
-            // This method is used to check if new_i (new index) exists in the moves to check list,
-            // and if so performs several actions to setup the correct transposition link.
-            Action<int, int> act = (int old_i, int new_i) =>
-            {
-                int idx;
-
-                if ((idx = moves_to_check.IndexOf(new_i)) != -1)
-                {
-                    if (!transpositions_lookup.ContainsKey(old_i))
-                        transpositions_lookup.Add(old_i, new List<int>());
-
-                    transpositions_lookup[old_i].Add(new_i);
-
-                    moves_to_check.RemoveAt(idx);
-
-                    idx = moves.IndexOf(new_i);
-
-                    if (idx != -1)
-                        moves.RemoveAt(idx);
-                }
-            };
-            #endregion
-
-            // Loop to check all relevant moves.
-            // Checked moves are removed from the collection, and there can be no valid transpositions with only one move.
-            while (moves_to_check.Count > 1)
-            {
-                var old_index = moves_to_check.ElementAt(0);
-                moves_to_check.RemoveAt(0);
-
-                // 180rot transposition index.
-                var new_index = game.Board.Length - 1 - old_index;
-                act(old_index, new_index);
-
-                // Horizontal flip transposition index.
-                var xy = game.GetXY(old_index);
-                new_index = game.GetIndex(xy.y, xy.x);
-                act(old_index, new_index);
-
-                // Vertical flip transposition index.
-                new_index = game.GetIndex(game.BoardSize - 1 - xy.y, game.BoardSize - 1 - xy.x);
-                act(old_index, new_index);
-
-            }
-            #endregion
-#endif
             // Moves are actually trimmed after transpositions are removed, as transpositions are just free trims.
             if (MoveTrimming && MoveTrimTo < moves.Count)
             {
@@ -367,17 +307,6 @@ namespace OthelloGame.Controllers
                 var move_info = new Minimax.MoveInfo(item.Value.weight);
                 weights.Add(item.Key, move_info);
 
-#if FIX_LATER
-                // Check if any transpositions exist, and if so expand out the results for each of the transpositions.
-                List<int> transpoitions;
-                if (transpositions_lookup.TryGetValue(item.Key, out transpoitions))
-                {
-                    foreach (var iitem in transpoitions)
-                    {
-                        weights.Add(iitem, move_info);
-                    }
-                }
-#endif
 #if DEBUG || DEBUG_STATS_ONLY
                 data_set.found_nodes += item.Value.found_nodes;
                 data_set.endpoints += item.Value.endpoints;
@@ -500,7 +429,7 @@ namespace OthelloGame.Controllers
         public override string UniqueIdentString()
         {
             return
-                "AIMinimax|0.30|C#||" +
+                "AIMinimax|0.31|C#||" +
                 "MoveTrimming:" + MoveTrimming + ";" +
                 "MoveTrimTo:" + MoveTrimTo + ";" +
                 "Depth:" + Depth + ";" +
@@ -600,14 +529,14 @@ namespace OthelloGame.Controllers
                 var data = new MoveEvalData();
 
                 var oppoent_last_move_weight = res.valid_move_w_weights[game.MoveHistory.Peek()].weight;
-                var oppoent_best_available_move_weight = res.weight;
+                var oppoent_best_available_move_weight = Minimax.MovesByWeight(res.valid_move_w_weights).Last().Key;
 
                 data.best_move_weight = oppoent_best_available_move_weight;
                 data.chosen_move_weight = oppoent_last_move_weight;
 
                 data.chosen_dev_weight = Math.Abs(oppoent_best_available_move_weight - oppoent_last_move_weight);
 
-                double count_picked = 0, count_worse = 0, count_total = res.valid_move_w_weights.Count;
+                double count_picked = 0, count_worse = 0, count_total = res.valid_move_w_weights.Count, count_best = 0;
 
                 foreach (var item in res.valid_move_w_weights)
                 {
@@ -615,11 +544,18 @@ namespace OthelloGame.Controllers
                         count_picked += 1;
                     else if (item.Value.weight < oppoent_last_move_weight)
                         count_worse += 1;
+
+                    if (item.Value.weight == data.best_move_weight)
+                        count_best += 1;
                 }
 
                 data.prob_picked = count_picked / count_total;
                 data.prob_worse = count_worse / count_total;
                 data.prob_better = (count_total - (count_picked + count_worse)) / count_total;
+
+                data.move_count = res.valid_move_w_weights.Count;
+                data.prob_best = (count_best / count_total);
+
 
                 OppoentMoveData.Add(data);
             }
@@ -633,6 +569,8 @@ namespace OthelloGame.Controllers
             public double prob_picked;
             public double prob_worse;
             public double prob_better;
+            public double prob_best;
+            public int move_count;
         }
 
         #endregion
