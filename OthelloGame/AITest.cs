@@ -8,6 +8,9 @@ using System.Web;
 
 namespace OthelloGame
 {
+    /// <summary>
+    /// Class used to hold code for AI testing.
+    /// </summary>
     public static class AITest
     {
         public static void AIPerformanceCalibaration()
@@ -15,38 +18,6 @@ namespace OthelloGame
 
         }
 
-        public static void AISupertest(Game game, int times, Weighting.IWeighting weighting_algorithm)
-        {
-            AIChecklistTest(game, times, 0, weighting_algorithm);
-            AIChecklistTest(game, times, 1, weighting_algorithm);
-        }
-
-        public static void AIChecklistTest(Game game, int times, int side, Weighting.IWeighting weighting_algorithm)
-        {
-            var tester = side;
-            var teste = game.OtherPlayer(side);
-
-            var weighting_tests = new List<Weighting.IWeighting>()
-            {
-                new Weighting.DiskDifference(),
-                new Weighting.FrontierDiskRatio(),
-                new Weighting.StableDiskRatio(),
-                new Weighting.TieredWeighting(),
-                new Weighting.TieredWeightingCompressed_R2()
-            };
-
-            (game.PlayerControllers[tester] as Controllers.AIMinimax).MoveSelector = new MoveSelectors.Best();
-            (game.PlayerControllers[tester] as Controllers.AIMinimax).Weighting = weighting_algorithm;
-            (game.PlayerControllers[teste] as Controllers.AIMinimax).AlterWeighting = null;
-
-            AITest.AIWeightingGauntlet(game, times, teste, weighting_tests);
-
-
-            (game.PlayerControllers[tester] as Controllers.AIMinimax).MoveSelector = new MoveSelectors.Adaptive_R21();
-            (game.PlayerControllers[teste] as Controllers.AIMinimax).AlterWeighting = weighting_algorithm;
-
-            AITest.AIWeightingGauntlet(game, times, teste, weighting_tests);
-        }
 
         public static void AIWeightingGauntlet(Game game, int times_per_test, int swap_side, List<Weighting.IWeighting> testers)
         {
@@ -136,6 +107,10 @@ namespace OthelloGame
             }
         }
 
+        /// <summary>
+        /// Sends the results of a match to the local server so that it can be saved.
+        /// </summary>
+        /// <param name="match_result">Match result to send.</param>
         public static void SendMatchResult(MatchResult match_result)
         {
             byte[] postBytes = new ASCIIEncoding().GetBytes(match_result.ToQueryString());

@@ -6,6 +6,11 @@ using System.Threading.Tasks;
 
 namespace OthelloGame.MoveSelectors.RandomErrors
 {
+    /// <summary>
+    /// Base class for random error implementation whose goal was to help test the Adaptive AI.
+    /// Testing showed the results were too random for the small sample sizes used.
+    /// Naming Format: RandomError_R[egion e(arly)|m(id)|l(ate) game]_T[imes an error should occur (integer)]
+    /// </summary>
     public abstract class RandomErrorBase : IMoveSelector
     {
         protected Regions region = Regions.Any;

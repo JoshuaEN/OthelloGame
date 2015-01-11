@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 
 namespace OthelloGame.Tiebreaks
 {
+    /// <summary>
+    /// Picks a move out of the given moves based on static tile weight values.
+    /// If there's still a tie, tied moves are tie broken randomly.
+    /// </summary>
     class TileWeight : ITiebreak
     {
         public static readonly Tiebreaks.RandomTiebreak random = new RandomTiebreak();

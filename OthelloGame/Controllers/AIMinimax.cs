@@ -418,7 +418,7 @@ namespace OthelloGame.Controllers
 #if DEBUG || DEBUG_STATS_ONLY
 
             if (LastMinimaxResult != null)
-                renderer.DebugLabel.Content = InfoboxPreStr + " || Handycap: " + Handycap + " || Time: " + LastResultTime + "ms Endpoints: " + LastMinimaxResult.endpoints + " Nodes: " + LastMinimaxResult.nodes + " Found: " + LastMinimaxResult.found_nodes;
+                renderer.DebugLabel.Content = InfoboxPreStr + " || Time: " + LastResultTime + "ms Endpoints: " + LastMinimaxResult.endpoints + " Nodes: " + LastMinimaxResult.nodes + " Found: " + LastMinimaxResult.found_nodes;
             else
                 renderer.DebugLabel.Content = "Time: " + LastResultTime + "ms";
 
@@ -494,7 +494,6 @@ namespace OthelloGame.Controllers
         public Minimax.MinimaxDataSet AltLastMinimaxResult { get; private set; }
 
         public List<MoveEvalData> OppoentMoveData { get; set; }
-        public int Handycap { get; set; }
         public string InfoboxPreStr { get; set; }
 
         /// <summary>

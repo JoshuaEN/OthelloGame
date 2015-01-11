@@ -11,7 +11,7 @@ namespace OthelloGame.Weighting
     /// </summary>
     class InvertedTieredWeighting : TieredWeighting
     {
-        public int Do(OthelloGame.Game game, int player)
+        public new int Do(OthelloGame.Game game, int player)
         {
             return base.Do(game, player) * -1;
         }

@@ -7,6 +7,9 @@ using OthelloGame;
 
 namespace OthelloGame.Tiebreaks
 {
+    /// <summary>
+    /// Interface for tiebreaking.
+    /// </summary>
     public interface ITiebreak
     {
         int Do(IDictionary<int, Minimax.MoveInfo> moves, Game game);

@@ -12,7 +12,7 @@ namespace OthelloGame.Weighting
     /// </summary>
     class Adaptive_R1 : TieredWeightingCompressed_R2
     {
-        public int Do(Game game, int player)
+        public new int Do(Game game, int player)
         {
             var weight = base.Do(game, player);
 

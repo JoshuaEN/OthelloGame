@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace OthelloGame.Tiebreaks
 {
+    /// <summary>
+    /// Picks a random move of the given moves.
+    /// </summary>
     class RandomTiebreak : ITiebreak
     {
 

@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Settings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <UseSavedControllers>false</UseSavedControllers>
+  <TileInfoLevel>Full</TileInfoLevel>
+  <DrawControllerData>true</DrawControllerData>
   <Player1IsCruel>true</Player1IsCruel>
   <Player1IsSmart>false</Player1IsSmart>
   <Player1IsConfused>false</Player1IsConfused>

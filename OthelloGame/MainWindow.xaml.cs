@@ -61,7 +61,7 @@ namespace OthelloGame
             p1.MoveTrimTo = 6;
 
             p1.AlterWeighting = p0.Weighting;
-            p1.Weighting = new Weighting.FrontierDiskRatio();
+            p1.Weighting = new Weighting.DiskDifference();
 
             game.PlayerControllers[0] = p0;
             game.PlayerControllers[1] = p1;
@@ -79,61 +79,10 @@ namespace OthelloGame
             var tester = 0;
             var teste = game.OtherPlayer(0);
 
-            var weighting_tests = new List<Weighting.WeightingBase>()
-            {
-                new Weighting.DiskDifference(),
-                new Weighting.FrontierDiskRatio(),
-                new Weighting.StableDiskRatio(),
-                //new Weighting.TieredWeighting(),
-                new Weighting.TieredWeightingCompressed_R2()
-            };
-
             Game = game;
 
-            (Game.PlayerControllers[tester] as Controllers.AIMinimax).MoveTrimTo = 99;
-            (Game.PlayerControllers[teste] as Controllers.AIMinimax).MoveTrimTo = 99;
 
-            (Game.PlayerControllers[tester] as Controllers.AIMinimax).Depth = 6;
-            (Game.PlayerControllers[teste] as Controllers.AIMinimax).Depth = 6;
-
-            (Game.PlayerControllers[tester] as Controllers.AIMinimax).FullSolvePoint = 8;
-            (Game.PlayerControllers[teste] as Controllers.AIMinimax).FullSolvePoint = 8;
-
-            (game.PlayerControllers[tester] as Controllers.AIMinimax).MoveSelector = new MoveSelectors.Best();
-            (game.PlayerControllers[tester] as Controllers.AIMinimax).Weighting = new Weighting.TieredWeightingCompressed_R2();
-            (game.PlayerControllers[teste] as Controllers.AIMinimax).AlterWeighting = null;
-
-            AITest.AIWeightingGauntlet(game, 100, teste, weighting_tests);
-
-            weighting_tests = new List<Weighting.WeightingBase>()
-            {
-                new Weighting.DiskDifference(),
-                new Weighting.FrontierDiskRatio(),
-                new Weighting.StableDiskRatio()
-            };
-
-            (Game.PlayerControllers[teste] as Controllers.AIMinimax).Depth = 7;
-            (Game.PlayerControllers[tester] as Controllers.AIMinimax).FullSolvePoint = 8;
-            (Game.PlayerControllers[teste] as Controllers.AIMinimax).FullSolvePoint = 8;
-
-            AITest.AIWeightingGauntlet(game, 100, teste, weighting_tests);
-
-            weighting_tests = new List<Weighting.WeightingBase>()
-            {
-                new Weighting.DiskDifference(),
-                //new Weighting.FrontierDiskRatio(),
-                //new Weighting.StableDiskRatio()
-            };
-
-            (Game.PlayerControllers[teste] as Controllers.AIMinimax).Depth = 8;
-            (Game.PlayerControllers[tester] as Controllers.AIMinimax).FullSolvePoint = 8;
-            (Game.PlayerControllers[teste] as Controllers.AIMinimax).FullSolvePoint = 8;
-
-            AITest.AIWeightingGauntlet(game, 100, teste, weighting_tests);
-
-
-
-            weighting_tests = new List<Weighting.WeightingBase>()
+            var weighting_tests = new List<Weighting.IWeighting>()
             {
                 new Weighting.DiskDifference(),
                 new Weighting.FrontierDiskRatio(),
@@ -142,86 +91,42 @@ namespace OthelloGame
                 new Weighting.TieredWeightingCompressed_R2()
             };
 
-            (Game.PlayerControllers[tester] as Controllers.AIMinimax).MoveTrimTo = 6;
-            (Game.PlayerControllers[teste] as Controllers.AIMinimax).MoveTrimTo = 6;
-            (Game.PlayerControllers[tester] as Controllers.AIMinimax).Depth = 6;
-            (Game.PlayerControllers[teste] as Controllers.AIMinimax).Depth = 6;
-            (Game.PlayerControllers[tester] as Controllers.AIMinimax).FullSolvePoint = 8;
-            (Game.PlayerControllers[teste] as Controllers.AIMinimax).FullSolvePoint = 8;
-
             (game.PlayerControllers[teste] as Controllers.AIMinimax).MoveSelector = new MoveSelectors.Best();
+            (game.PlayerControllers[tester] as Controllers.AIMinimax).MoveSelector = new MoveSelectors.Best();
             (game.PlayerControllers[teste] as Controllers.AIMinimax).Weighting = new Weighting.TieredWeightingCompressed_R2();
+            (game.PlayerControllers[tester] as Controllers.AIMinimax).Weighting = new Weighting.TieredWeightingCompressed_R2();
             (game.PlayerControllers[tester] as Controllers.AIMinimax).AlterWeighting = null;
             (game.PlayerControllers[teste] as Controllers.AIMinimax).AlterWeighting = null;
 
-            AITest.AIWeightingGauntlet(game, 100, tester, weighting_tests);
+            (game.PlayerControllers[teste] as Controllers.AIMinimax).MoveSelector = new MoveSelectors.Adaptive_V4_R8_EM();
+            (game.PlayerControllers[tester] as Controllers.AIMinimax).AlterWeighting = new Weighting.TieredWeightingCompressed_R2();
 
-            (game.PlayerControllers[teste] as Controllers.AIMinimax).MoveSelector = new MoveSelectors.Adaptive_V4_R8();
+            //AITest.AIWeightingGauntlet(game, 100, tester, weighting_tests);
+
+            (game.PlayerControllers[teste] as Controllers.AIMinimax).MoveSelector = new MoveSelectors.Adaptive_V4_R8_EM();
             (game.PlayerControllers[tester] as Controllers.AIMinimax).AlterWeighting = new Weighting.TieredWeightingCompressed_R2();
 
             AITest.AIWeightingGauntlet(game, 100, tester, weighting_tests);
 
-            Environment.Exit(0);
-            (game.PlayerControllers[tester] as Controllers.AIMinimax).MoveSelector = new MoveSelectors.Adaptive_V4_R8();
+
+            (game.PlayerControllers[teste] as Controllers.AIMinimax).MoveSelector = new MoveSelectors.Best();
+            (game.PlayerControllers[tester] as Controllers.AIMinimax).MoveSelector = new MoveSelectors.Best();
+            (game.PlayerControllers[teste] as Controllers.AIMinimax).Weighting = new Weighting.TieredWeightingCompressed_R2();
+            (game.PlayerControllers[tester] as Controllers.AIMinimax).Weighting = new Weighting.TieredWeightingCompressed_R2();
+            (game.PlayerControllers[tester] as Controllers.AIMinimax).AlterWeighting = null;
+            (game.PlayerControllers[teste] as Controllers.AIMinimax).AlterWeighting = null;
+
+            (game.PlayerControllers[tester] as Controllers.AIMinimax).MoveSelector = new MoveSelectors.Adaptive_V4_R8_EM();
             (game.PlayerControllers[teste] as Controllers.AIMinimax).AlterWeighting = new Weighting.TieredWeightingCompressed_R2();
 
-            //AITest.AIPerformanceTest(false, -1, game, 401);
+            //AITest.AIWeightingGauntlet(game, 100, teste, weighting_tests);
+
+            (game.PlayerControllers[tester] as Controllers.AIMinimax).MoveSelector = new MoveSelectors.Adaptive_V4_R8_EM();
+            (game.PlayerControllers[teste] as Controllers.AIMinimax).AlterWeighting = new Weighting.TieredWeightingCompressed_R2();
+
             AITest.AIWeightingGauntlet(game, 100, teste, weighting_tests);
 
-           // (game.PlayerControllers[tester] as Controllers.AIMinimax).MoveSelector = new MoveSelectors.Adaptive_V3();
-           // AITest.AIWeightingGauntlet(game, 100, teste, weighting_tests);
-
-            //AITest.AIPerformanceTest(false, -1, game, 1);
-
-
-            //AITest.AISupertest(game, 500, new Weighting.TieredWeighting());
-
-            //(game.PlayerControllers[1] as Controllers.AIMinimax).MoveSelector = new MoveSelectors.Best();
-            //(game.PlayerControllers[1] as Controllers.AIMinimax).Weighting = new Weighting.TieredWeighting();
-            //(game.PlayerControllers[0] as Controllers.AIMinimax).AlterWeighting = null;// new Weighting.TieredWeighting();
-
-            //AITest.AIWeightingGauntlet(game, 100, 0, new List<Weighting.WeightingBase>()
-            //{
-            //    new Weighting.DiskDifference(),
-            //    new Weighting.StableDiskRatio(),
-            //    new Weighting.TieredWeighting(),
-            //    new Weighting.TieredWeightingCompressed_R2(),
-            //    new Weighting.TieredWeightingCompressedV2_R4()
-            //});
-
-            //return;
-
-            //(game.PlayerControllers[0] as Controllers.AIMinimax).MoveSelector = new MoveSelectors.Adaptive_R21();
-
-            //AITest.AIWeightingGauntlet(game, 100, 1, new List<Weighting.WeightingBase>()
-            //{
-            //    new Weighting.DiskDifference(),
-            //    new Weighting.StableDiskRatio(),
-            //    new Weighting.TieredWeighting(),
-            //    new Weighting.TieredWeightingCompressed_R2(),
-            //    new Weighting.TieredWeightingCompressedV2_R4()
-            //});
-
-            //AITest.AIPerformanceTest(false, -1, game, 100);
-
-            //AITest.AIMoveSelectorGauntlet(game, 100, new MoveSelectors.Best(), new List<MoveSelectors.IMoveSelector>() {
-            //    new RandomError_Ra_T1(),
-            //    new RandomError_Ra_T2(),
-            //    new RandomError_Ra_T3(),
-            //    new RandomError_Ra_T5(),
-            //    new RandomError_Ra_T10(),
-            //    new RandomError_Re_T1(),
-            //    new RandomError_Re_T2(),
-            //    new RandomError_Re_T3(),
-            //    new RandomError_Rm_T1(),
-            //    new RandomError_Rm_T2(),
-            //    new RandomError_Rm_T3(),
-            //    new RandomError_Rl_T1(),
-            //    new RandomError_Rl_T2(),
-            //    new RandomError_Rl_T3(),
-            //});
-            this.Close();
-            return;
+            Environment.Exit(0);
 #endif
 
             var game_render = new GameRender(this, GameGrid, lblDebugInfo, game);

@@ -10,7 +10,7 @@ namespace OthelloGame.MoveSelectors
     /// Final Adaptive AI move selection code.
     /// Uses two variables related to move quality to determine two chose the best move to achieve least advantage.
     /// </summary>
-    class Adaptive_V4_R8 : IMoveSelector
+    class Adaptive_V4_R9 : IMoveSelector
     {
         public int Select(SortedDictionary<int, Dictionary<int, Minimax.MoveInfo>> moves_by_weight, Game game)
         {
@@ -52,7 +52,8 @@ namespace OthelloGame.MoveSelectors
                 // in the case of the stable disk ratio algorithm, I think it works against it.
                 // That algorithm tends to build up all of this handicap early on then starts to play well later,
                 // this later good play has a hard time offsetting the much poorer early game play.
-                var other_lookback_target = other_controller.OppoentMoveData.Count;
+                // Well maybe...
+                var other_lookback_target = (other_controller.OppoentMoveData.Count > 20 ? 20 : other_controller.OppoentMoveData.Count);
 
 
                 double their = controller.OppoentMoveData.GetRange(controller.OppoentMoveData.Count - lookback_target, lookback_target).Select(func).Average();
@@ -129,15 +130,15 @@ namespace OthelloGame.MoveSelectors
                         best_weight = item.Key;
                     }
                     // Never pick a move which will lose the game.
-                    else if(item.Key <= Globals.LOSS)
+                    else if (item.Key <= Globals.LOSS)
                     {
                         break;
                     }
                     else
                     {
                         double prob_better = items_better / total;
-                        
-                        if( (item.Key + handicap) > best_possible_weight && prob_better < prob_handicap)
+
+                        if ((item.Key + handicap) > best_possible_weight && prob_better < prob_handicap)
                             best_weight = item.Key;
                     }
 

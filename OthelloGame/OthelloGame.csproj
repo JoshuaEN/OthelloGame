@@ -53,6 +53,9 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Icon.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -76,7 +79,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="EndgameWeighting\DiskMaximizing.cs" />
-    <Compile Include="EndgameWeighting\EndgameWeightingBase.cs" />
+    <Compile Include="EndgameWeighting\IEndgameWeighting.cs" />
     <Compile Include="EndgameWeighting\WinLossTie.cs" />
     <Compile Include="Events\GameBoardAdvancedEventArgs.cs" />
     <Compile Include="Events\GameStateChangedEventArgs.cs" />
@@ -91,12 +94,10 @@
     <Compile Include="Events\TileChangedEventArgs.cs" />
     <Compile Include="Exceptions\LogicError.cs" />
     <Compile Include="Exceptions\OthelloGameExceptionBase.cs" />
-    <Compile Include="MoveSelectors\Adaptive.cs" />
-    <Compile Include="MoveSelectors\Adaptive_EM.cs" />
-    <Compile Include="MoveSelectors\Adaptive_V2.cs" />
-    <Compile Include="MoveSelectors\Adaptive_V2_EM.cs" />
-    <Compile Include="MoveSelectors\Adaptive_V3.cs" />
     <Compile Include="MoveSelectors\Adaptive_V4.cs" />
+    <Compile Include="MoveSelectors\Adaptive_V4_EM.cs" />
+    <Compile Include="MoveSelectors\Adaptive_V4_R9.cs" />
+    <Compile Include="MoveSelectors\Adaptive_V4_R9_EM.cs" />
     <Compile Include="MoveSelectors\Best.cs" />
     <Compile Include="MoveSelectors\IMoveSelector.cs" />
     <Compile Include="MoveSelectors\RandomErrors\RandomErrorBase.cs" />
@@ -132,7 +133,7 @@
     <Compile Include="Weighting\TieredWeighting.cs" />
     <Compile Include="Weighting\TieredWeightingCompressed.cs" />
     <Compile Include="Weighting\TieredWeightingCompressedV2.cs" />
-    <Compile Include="Weighting\WeightingBase.cs" />
+    <Compile Include="Weighting\IWeighting.cs" />
     <Page Include="GameTile.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -197,6 +198,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

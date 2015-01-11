@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace OthelloGame.Tiebreaks
 {
+    /// <summary>
+    /// Pick the first index.
+    /// </summary>
     class FirstIndex : ITiebreak
     {
         public int Do(IDictionary<int, Minimax.MoveInfo> moves, Game game)
