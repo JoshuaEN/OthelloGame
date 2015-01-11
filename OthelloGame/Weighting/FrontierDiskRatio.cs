@@ -6,9 +6,12 @@ using System.Threading.Tasks;
 
 namespace OthelloGame.Weighting
 {
-    class FrontierDiskRatio : WeightingBase
+    /// <summary>
+    /// A backwards port from Tiered Weighting, used to test the Adaptive AI; performs poorly late game as it doesn't care about static disks.
+    /// </summary>
+    class FrontierDiskRatio : IWeighting
     {
-        public override int Do(OthelloGame.Game game, int player)
+        public int Do(OthelloGame.Game game, int player)
         {
             var them = game.OtherPlayer(player);
             var us = player;

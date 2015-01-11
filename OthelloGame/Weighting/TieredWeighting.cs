@@ -6,21 +6,12 @@ using System.Threading.Tasks;
 
 namespace OthelloGame.Weighting
 {
-    class TieredWeighting : WeightingBase
+    /// <summary>
+    /// One of, if not the best, weighting algorithm; Tiered Weighting Compressed was ultimately chosen because it's smaller jumps appeared to work better for being Adaptive.
+    /// </summary>
+    class TieredWeighting : IWeighting
     {
-        public override int GetDepth(Controllers.AIMinimax ai)
-        {
-            if (ai.MoveTrimming)
-            {
-                return 4;
-            }
-            else
-            {
-                return 4;
-            }
-        }
-
-        public override int Do(OthelloGame.Game game, int player)
+        public int Do(OthelloGame.Game game, int player)
         {
             var them = game.OtherPlayer(player);
             var us = player;
@@ -29,7 +20,7 @@ namespace OthelloGame.Weighting
             var stable_disk_ratio = GetRatio(stable_disks, us, them);
 
             var frontier_disks = game.GetFrontierCounts();
-            var frontier_disk_ratio = GetRatio(frontier_disks, them, us); // Flip them and us, because we want less, rather than more, fronttier disks.
+            var frontier_disk_ratio = GetRatio(frontier_disks, them, us); // Flip them and us, because we want less, rather than more, frontier disks.
 
             var unstable_disks = game.GetCounts();
             unstable_disks[0] -= stable_disks[0];
@@ -39,6 +30,7 @@ namespace OthelloGame.Weighting
 
             var weight = 0;
 
+            // Use multipliers to create tiering.
             if (stable_disk_ratio != 0)
                 weight += stable_disk_ratio * 10000;
 

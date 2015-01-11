@@ -45,7 +45,7 @@ namespace OthelloGame
 
             GameTiles = new List<GameTile>(game.Board.Length);
             Waiting = false;
-            HighlightValidMoves = true;
+            //TileInfoLevel = TileInfoLevels.Full;
 
             grid.RowDefinitions.Clear();
             grid.ColumnDefinitions.Clear();
@@ -105,6 +105,9 @@ namespace OthelloGame
         /// </summary>
         public MainWindow Window { get; set; }
 
+        /// <summary>
+        /// Label for Debug Info
+        /// </summary>
         public Label DebugLabel { get; set; }
 
         /// <summary>
@@ -120,12 +123,26 @@ namespace OthelloGame
         /// <summary>
         /// Should valid moves by highlighted?
         /// </summary>
-        public bool HighlightValidMoves { get; set; }
+        public TileInfoLevels TileInfoLevel 
+        {
+            get { return Globals.Settings.TileInfoLevel; }
+            set { Globals.Settings.TileInfoLevel = value; }
+        }
 
         /// <summary>
         /// Should the active controller be given the chance to draw data?
         /// </summary>
-        public bool DrawControllerData { get; set; }
+        public bool DrawControllerData 
+        {
+            get
+            {
+                return Globals.Settings.DrawControllerData;
+            }
+            set
+            {
+                Globals.Settings.DrawControllerData = value;
+            }
+        }
 
         /// <summary>
         /// The last move that took place, used to highlight last move.
@@ -146,7 +163,7 @@ namespace OthelloGame
             RedrawGrid();
 
             // Perhaps allow the active controller to draw on the grid, if it wants.
-            if (Game.ActivePlayerController != null && Waiting == false && DrawControllerData == true && Game.Finished == false)
+            if (Game.ActivePlayerController != null && Waiting == false && DrawControllerData == true && Game.Finished == false && (TileInfoLevel == TileInfoLevels.Full || TileInfoLevel == TileInfoLevels.ValidMoves))
             {
                 Game.ActivePlayerController.DrawBoard(this);
             }
@@ -168,15 +185,18 @@ namespace OthelloGame
 #endif
                 tile.HighlightMode = GameTile.HighlightModes.None;
 
-                if (HighlightValidMoves && Game.ValidMoves.IndexOf(i) != -1)
+                if (TileInfoLevel == TileInfoLevels.None)
+                    continue;
+
+                if (Game.ValidMoves.IndexOf(i) != -1 && (TileInfoLevel == TileInfoLevels.ValidMoves ||  TileInfoLevel == TileInfoLevels.Full))
                 {
                     tile.HighlightMode = GameTile.HighlightModes.ValidMove;
                 }
-                else if (LastMoveIndex == i)
+                else if (LastMoveIndex == i && (TileInfoLevel == TileInfoLevels.LastMove || TileInfoLevel == TileInfoLevels.Full))
                 {
                     tile.HighlightMode = GameTile.HighlightModes.LastMove;
                 }
-                else if (LastMoveEffects.IndexOf(i) != -1)
+                else if (LastMoveEffects.IndexOf(i) != -1 && (TileInfoLevel == TileInfoLevels.LastMove || TileInfoLevel == TileInfoLevels.Full))
                 {
                     tile.HighlightMode = GameTile.HighlightModes.LastMoveEffect;
                 }
@@ -221,6 +241,22 @@ namespace OthelloGame
                 else
                     Window.lblPlayer2GameInfo.Content += " - Current Player";
             }
+        }
+
+        protected void NextTileInfoLevel()
+        {
+            int next = ((int)TileInfoLevel) + 1;
+            if (Enum.IsDefined(typeof(TileInfoLevels), next) == false)
+                next = 0;
+
+            TileInfoLevel = (TileInfoLevels)next;
+            Draw();
+        }
+
+        protected void NextDrawControllerData()
+        {
+            DrawControllerData = !DrawControllerData;
+            Draw();
         }
 
         #region Event Handlers
@@ -290,6 +326,14 @@ namespace OthelloGame
             {
                 Controllers.AIMinimax ai = Game.ActivePlayerController as Controllers.AIMinimax;
                 Game.Move(ai.BestMoveIdx);
+            }
+            else if(e.Key == System.Windows.Input.Key.V)
+            {
+                NextTileInfoLevel();
+            }
+            else if(e.Key == System.Windows.Input.Key.C)
+            {
+                NextDrawControllerData();
             }
         }
 
@@ -374,6 +418,8 @@ namespace OthelloGame
             Storyboard.SetTargetProperty(animation, new System.Windows.PropertyPath("Background.Color"));
             s.Begin();
         }
+
+        public enum TileInfoLevels { None, ValidMoves, LastMove, Full };
 
     }
 }

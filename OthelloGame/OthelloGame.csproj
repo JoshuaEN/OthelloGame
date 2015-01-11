@@ -96,6 +96,7 @@
     <Compile Include="MoveSelectors\Adaptive_V2.cs" />
     <Compile Include="MoveSelectors\Adaptive_V2_EM.cs" />
     <Compile Include="MoveSelectors\Adaptive_V3.cs" />
+    <Compile Include="MoveSelectors\Adaptive_V4.cs" />
     <Compile Include="MoveSelectors\Best.cs" />
     <Compile Include="MoveSelectors\IMoveSelector.cs" />
     <Compile Include="MoveSelectors\RandomErrors\RandomErrorBase.cs" />

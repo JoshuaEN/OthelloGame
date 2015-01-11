@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace OthelloGame.MoveSelectors
 {
-    class Adaptive_R21 : IMoveSelector
+    /// <remarks>Has not undergone cleanup or commenting.</remarks>
+    class Adaptive_V3_R14 : IMoveSelector
     {
         public int Select(SortedDictionary<int, Dictionary<int, Minimax.MoveInfo>> moves_by_weight, Game game)
         {
@@ -19,18 +20,43 @@ namespace OthelloGame.MoveSelectors
             var handicap = 0;
 
             var lookback_min = 3;
-            var lookback_target = (controller.OppoentMoveData.Count > 3 ? 3 : controller.OppoentMoveData.Count);
+            var lookback_target = controller.OppoentMoveData.Count;
 
             if (controller.OppoentMoveData.Count >= lookback_min)
             {
 
-                double data_avg = controller.OppoentMoveData.GetRange(controller.OppoentMoveData.Count - lookback_target, lookback_target).Select(v => 
-                    v.chosen_dev_weight * (1.0 - v.prob_picked) * v.prob_better
-                ).Average();
+                Func<Controllers.AIMinimax.MoveEvalData, double> func = v =>
+                {
+                    var bonusa = (v.chosen_dev_weight * (1.0 - v.prob_picked));
+                    var bonusb = (v.chosen_dev_weight * v.prob_better);
+                    var act_bonus = (bonusa > bonusb ? bonusa : bonusb);
+
+                    return v.chosen_dev_weight + act_bonus;// (v.chosen_dev_weight * (1.0 - v.prob_picked)) + (v.chosen_dev_weight * v.prob_better);
+                };
+
+                var other_lookback_target = other_controller.OppoentMoveData.Count;
+
+                double their = controller.OppoentMoveData.GetRange(controller.OppoentMoveData.Count - lookback_target, lookback_target).Select(func).Average();
+                double ours = other_controller.OppoentMoveData.GetRange(other_controller.OppoentMoveData.Count - other_lookback_target, other_lookback_target).Select(func).Average();
+                double data_avg = their - ours;
+
+                Func<Controllers.AIMinimax.MoveEvalData, double> o_func = v =>
+                {
+                    return v.best_move_weight * (1.0 - v.prob_best);
+                };
+
+                double o_theirs = controller.OppoentMoveData.GetRange(controller.OppoentMoveData.Count - lookback_target, lookback_target).Select(o_func).Average();
+                double o_ours = other_controller.OppoentMoveData.GetRange(other_controller.OppoentMoveData.Count - other_lookback_target, other_lookback_target).Select(o_func).Average();
+                double o_data_avg = Math.Abs(o_theirs - o_ours);
+
+                //if(o_theirs < o_ours)
 
                 handicap = (int)Math.Round(data_avg);
 
-                controller.InfoboxPreStr = "Data Avg: " + Math.Round(data_avg, 2);
+                //if (o_theirs < o_ours)
+                  //  handicap = (int)Math.Round((handicap + o_data_avg)/2);
+
+                controller.InfoboxPreStr = "Data Avg: " + data_avg + " | O Data Avg: " + o_data_avg;
 
                 if (handicap < 0)
                     handicap = 0;
@@ -48,17 +74,21 @@ namespace OthelloGame.MoveSelectors
                 handicap = 0;
                 board_solved = true;
             }
+            else if (game.MoveHistory.Count >= 50)
+            {
+                //  handicap = 0;
+            }
 
             if (board_solved)
             {
                 for (var i = moves_by_weight.Count - 1; i >= 0; i--)
                 {
                     var item = moves_by_weight.ElementAt(i);
-                    if(best_weight == int.MinValue)
+                    if (best_weight == int.MinValue)
                     {
                         best_weight = item.Key;
                     }
-                    else if(item.Key > Globals.WIN)
+                    else if (item.Key > Globals.WIN)
                     {
                         best_weight = item.Key;
                     }
@@ -93,3 +123,4 @@ namespace OthelloGame.MoveSelectors
 
 
 }
+

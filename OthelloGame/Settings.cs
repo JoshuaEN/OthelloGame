@@ -27,8 +27,42 @@ namespace OthelloGame
             {
                 if (_useSavedControllers != value)
                 {
-                    OnPropertyChanged();
                     _useSavedControllers = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private GameRender.TileInfoLevels _tileInfoLevel = GameRender.TileInfoLevels.Full;
+        /// <summary>
+        /// How much information should be drawn on tiles.
+        /// </summary>
+        public GameRender.TileInfoLevels TileInfoLevel
+        {
+            get { return _tileInfoLevel; }
+            set
+            {
+                if(_tileInfoLevel != value)
+                {
+                    _tileInfoLevel = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private bool _drawControllerData = true;
+        /// <summary>
+        /// Should the controller be asked to draw tile data; also controls if the controller draws debug info.
+        /// </summary>
+        public bool DrawControllerData
+        {
+            get { return _drawControllerData; }
+            set
+            {
+                if(_drawControllerData != value)
+                {
+                    _drawControllerData = value;
+                    OnPropertyChanged();
                 }
             }
         }
@@ -45,8 +79,8 @@ namespace OthelloGame
             {
                 if(_player1IsCruel != value)
                 {
-                    OnPropertyChanged();
                     _player1IsCruel = value;
+                    OnPropertyChanged();
                 }
             }
         }
@@ -59,8 +93,8 @@ namespace OthelloGame
             {
                 if (_player1IsSmart != value)
                 {
-                    OnPropertyChanged();
                     _player1IsSmart = value;
+                    OnPropertyChanged();
                 }
             }
         }
@@ -73,8 +107,8 @@ namespace OthelloGame
             {
                 if (_player1IsConfused != value)
                 {
-                    OnPropertyChanged();
                     _player1IsConfused = value;
+                    OnPropertyChanged();
                 }
             }
         }
@@ -87,8 +121,8 @@ namespace OthelloGame
             {
                 if (_player1Depth != value)
                 {
-                    OnPropertyChanged();
                     _player1Depth = value;
+                    OnPropertyChanged();
                 }
             }
         }
@@ -101,8 +135,8 @@ namespace OthelloGame
             {
                 if (_player1IsAI != value)
                 {
-                    OnPropertyChanged();
                     _player1IsAI = value;
+                    OnPropertyChanged();
                 }
             }
         }
@@ -115,8 +149,8 @@ namespace OthelloGame
             {
                 if (_player1IsHuman != value)
                 {
-                    OnPropertyChanged();
                     _player1IsHuman = value;
+                    OnPropertyChanged();
                 }
             }
         }
@@ -130,8 +164,8 @@ namespace OthelloGame
             {
                 if (_player2IsCruel != value)
                 {
-                    OnPropertyChanged();
                     _player2IsCruel = value;
+                    OnPropertyChanged();
                 }
             }
         }
@@ -144,8 +178,8 @@ namespace OthelloGame
             {
                 if (_player2IsSmart != value)
                 {
-                    OnPropertyChanged();
                     _player2IsSmart = value;
+                    OnPropertyChanged();
                 }
             }
         }
@@ -158,8 +192,8 @@ namespace OthelloGame
             {
                 if (_player2IsConfused != value)
                 {
-                    OnPropertyChanged();
                     _player2IsConfused = value;
+                    OnPropertyChanged();
                 }
             }
         }
@@ -172,8 +206,8 @@ namespace OthelloGame
             {
                 if (_player2Depth != value)
                 {
-                    OnPropertyChanged();
                     _player2Depth = value;
+                    OnPropertyChanged();
                 }
             }
         }
@@ -186,8 +220,8 @@ namespace OthelloGame
             {
                 if (_player2IsAI != value)
                 {
-                    OnPropertyChanged();
                     _player2IsAI = value;
+                    OnPropertyChanged();
                 }
             }
         }
@@ -200,8 +234,8 @@ namespace OthelloGame
             {
                 if (_player2IsHuman != value)
                 {
-                    OnPropertyChanged();
                     _player2IsHuman = value;
+                    OnPropertyChanged();
                 }
             }
         }

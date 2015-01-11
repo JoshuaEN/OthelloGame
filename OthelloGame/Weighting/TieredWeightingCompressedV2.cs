@@ -6,21 +6,13 @@ using System.Threading.Tasks;
 
 namespace OthelloGame.Weighting
 {
-    class TieredWeightingCompressedV2_R4 : WeightingBase
+    /// <summary>
+    /// A slight modification of Tiered Weighting Compressed which tried to avoid the edges early game.
+    /// Limited testing showed little to no impact after tweaking.
+    /// </summary>
+    class TieredWeightingCompressedV2_R4 : IWeighting
     {
-        public override int GetDepth(Controllers.AIMinimax ai)
-        {
-            if (ai.MoveTrimming)
-            {
-                return 4;
-            }
-            else
-            {
-                return 4;
-            }
-        }
-
-        public override int Do(OthelloGame.Game game, int player)
+        public int Do(OthelloGame.Game game, int player)
         {
             var them = game.OtherPlayer(player);
             var us = player;

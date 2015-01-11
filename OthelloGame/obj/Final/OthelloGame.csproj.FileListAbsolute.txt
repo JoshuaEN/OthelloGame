@@ -1,5 +1,4 @@
 E:\Users\Joshua\Documents\Visual Studio 2013\Projects\OthelloGame3\OthelloGame\OthelloGame\bin\Final\OthelloGame.exe.config
-E:\Users\Joshua\Documents\Visual Studio 2013\Projects\OthelloGame3\OthelloGame\OthelloGame\obj\Final\OthelloGame.csprojResolveAssemblyReference.cache
 E:\Users\Joshua\Documents\Visual Studio 2013\Projects\OthelloGame3\OthelloGame\OthelloGame\obj\Final\PlayerSelection.baml
 E:\Users\Joshua\Documents\Visual Studio 2013\Projects\OthelloGame3\OthelloGame\OthelloGame\obj\Final\GameTile.g.cs
 E:\Users\Joshua\Documents\Visual Studio 2013\Projects\OthelloGame3\OthelloGame\OthelloGame\obj\Final\MainWindow.g.cs

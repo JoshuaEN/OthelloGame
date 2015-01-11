@@ -31,7 +31,7 @@
                                    IsConfused="{Binding Settings.Player2IsConfused, ElementName=window, Mode=TwoWay}" 
                                    Depth="{Binding Settings.Player2Depth, ElementName=window, Mode=TwoWay}"
                                    />
-            <Border Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" BorderThickness="0,1,0,0" BorderBrush="Black">
+            <Border Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" BorderThickness="0,1,0,0" BorderBrush="#99000000">
                 <StackPanel Orientation="Horizontal" FlowDirection="RightToLeft">
                     <Button Content="Exit" HorizontalAlignment="Right" VerticalAlignment="Center" Width="100" Height="25" Margin="15,0,0,0" HorizontalContentAlignment="Center" Click="Button_Click_2" FlowDirection="LeftToRight"/>
                     <Button Content="Start Game" HorizontalAlignment="Right" VerticalAlignment="Center" Width="100" Height="25" Margin="15,0,0,0" HorizontalContentAlignment="Center" Click="Button_Click_1" FlowDirection="LeftToRight"/>
@@ -99,6 +99,7 @@
                             <Separator/>
                             <MenuItem Header="Player Selection..." Click="MenuItem_Click_1"/>
                             <Separator/>
+                            <MenuItem Header="Help" Click="MenuItem_Click_3" />
                             <MenuItem Header="Exit" Click="MenuItem_Click"/>
                         </ContextMenu>
                     </Button.ContextMenu>
@@ -111,6 +112,27 @@
         <Grid x:Name="grdOverlay" Background="#19000000" Visibility="Collapsed">
             <Rectangle VerticalAlignment="Bottom" Height="25" Fill="#99000000"/>
             <Label Content="The Computer is Thinking" HorizontalAlignment="Center" VerticalAlignment="Bottom" Padding="4" Background="{x:Null}" FontSize="14" Foreground="White"/>
+        </Grid>
+
+        <Grid x:Name="grdHelp" Visibility="Collapsed" Background="White">
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition Height="40" />
+            </Grid.RowDefinitions>
+            <Label Content="Controls" HorizontalAlignment="Left" Margin="40,40,0,0" VerticalAlignment="Top" FontSize="14"/>
+            <StackPanel HorizontalAlignment="Left" Height="92" Margin="40,69,0,0" VerticalAlignment="Top" Width="180">
+                <Label Content="Left Click (on Tile) - Make Move"/>
+                <Label Content="V - Cycle Tile Info Modes"/>
+                <Label Content="C - Toggle Controller Data"/>
+            </StackPanel>
+            <Label Content="About" HorizontalAlignment="Left" Margin="40,166,0,0" VerticalAlignment="Top" FontSize="14"/>
+            <Label Content="Created by Joshua Neuenhoff" HorizontalAlignment="Left" Margin="40,195,0,0" VerticalAlignment="Top"/>
+            
+            <Border Grid.Row="1" BorderThickness="0,1,0,0" BorderBrush="#19000000">
+                <StackPanel Orientation="Horizontal" FlowDirection="RightToLeft">
+                    <Button Content="Close" HorizontalAlignment="Right" VerticalAlignment="Center" Width="100" Height="25" Margin="15,0,0,0" HorizontalContentAlignment="Center" Click="Button_Click_4" FlowDirection="LeftToRight"/>
+                </StackPanel>
+            </Border>
         </Grid>
     </Grid>
 </Window>

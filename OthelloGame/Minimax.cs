@@ -30,19 +30,14 @@ namespace OthelloGame
         public int Player { get; private set; }
 
         /// <summary>
-        /// Tiebreak method.
+        /// Class used to weight non-terminal board states.
         /// </summary>
-        public Func<Dictionary<int, MoveInfo>, Game, int> Tiebreak { get; set; }
+        public Weighting.IWeighting Weighting { get; set; }
 
         /// <summary>
-        /// Weighting method for non-terminal states.
+        /// Class used to weight terminal board states.
         /// </summary>
-        public Func<Game, int, int> Weighting { get; set; }
-
-        /// <summary>
-        /// Weighting method for terminal states.
-        /// </summary>
-        public Func<Game, int, int> EndgameWeighting { get; set; }
+        public EndgameWeighting.IEndgameWeighting EndgameWeighting { get; set; }
 
         /// <summary>
         /// 
@@ -52,7 +47,7 @@ namespace OthelloGame
         /// <summary>
         /// Internal tiebreak used to return best move index, as required.
         /// </summary>
-        private static readonly Func<Dictionary<int, MoveInfo>, Game, int> moveOrderingTiebreak = new Tiebreaks.TileWeight().Do;
+        private static readonly Tiebreaks.ITiebreak moveOrderingTiebreak = new Tiebreaks.TileWeight();
 
         /// <summary>
         /// Core function to perform Minimax lookup.
@@ -297,11 +292,11 @@ namespace OthelloGame
         {
             if (game.Finished)
             {
-                return EndgameWeighting(game, Player);
+                return EndgameWeighting.Do(game, Player);
             }
             else
             {
-                return Weighting(game, Player);
+                return Weighting.Do(game, Player);
             }
         }
 
@@ -573,7 +568,7 @@ namespace OthelloGame
 
                 while (move_options.Count > 0)
                 {
-                    var best_move = moveOrderingTiebreak(move_options, new_game);
+                    var best_move = moveOrderingTiebreak.Do(move_options, new_game);
                     move_options.Remove(best_move);
                     new_valid_moves.Add(best_move);
                 }

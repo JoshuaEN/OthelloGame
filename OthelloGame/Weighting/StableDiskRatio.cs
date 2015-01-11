@@ -6,10 +6,12 @@ using System.Threading.Tasks;
 
 namespace OthelloGame.Weighting
 {
-    class StableDiskRatio : WeightingBase
+    /// <summary>
+    /// The precursor to Tiered Weighting, good late game, but poor early and mid games. Though it does try to avoid the worst moves (giving up corners).
+    /// </summary>
+    class StableDiskRatio : IWeighting
     {
-
-        public override int Do(OthelloGame.Game game, int player)
+        public int Do(OthelloGame.Game game, int player)
         {
             var them = game.OtherPlayer(player);
             var us = player;

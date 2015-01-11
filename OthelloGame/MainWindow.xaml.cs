@@ -42,7 +42,7 @@ namespace OthelloGame
             p0.Tiebreak = new Tiebreaks.TileWeight();
             p0.Weighting = new Weighting.TieredWeightingCompressed_R2();
             p0.EndgameWeighting = new EndgameWeighting.DiskMaximizing();
-            p0.MoveSelector = new MoveSelectors.Adaptive_V3_R9();
+            p0.MoveSelector = new MoveSelectors.Adaptive_V4_R8();
             p0.Pause = pause;
             p0.Depth = depth;
             p0.UseThreading = thread;
@@ -61,7 +61,7 @@ namespace OthelloGame
             p1.MoveTrimTo = 6;
 
             p1.AlterWeighting = p0.Weighting;
-            p1.Weighting = new Weighting.DiskDifference();
+            p1.Weighting = new Weighting.FrontierDiskRatio();
 
             game.PlayerControllers[0] = p0;
             game.PlayerControllers[1] = p1;
@@ -84,17 +84,85 @@ namespace OthelloGame
                 new Weighting.DiskDifference(),
                 new Weighting.FrontierDiskRatio(),
                 new Weighting.StableDiskRatio(),
-                new Weighting.TieredWeighting(),
+                //new Weighting.TieredWeighting(),
                 new Weighting.TieredWeightingCompressed_R2()
             };
+
+            Game = game;
+
+            (Game.PlayerControllers[tester] as Controllers.AIMinimax).MoveTrimTo = 99;
+            (Game.PlayerControllers[teste] as Controllers.AIMinimax).MoveTrimTo = 99;
+
+            (Game.PlayerControllers[tester] as Controllers.AIMinimax).Depth = 6;
+            (Game.PlayerControllers[teste] as Controllers.AIMinimax).Depth = 6;
+
+            (Game.PlayerControllers[tester] as Controllers.AIMinimax).FullSolvePoint = 8;
+            (Game.PlayerControllers[teste] as Controllers.AIMinimax).FullSolvePoint = 8;
 
             (game.PlayerControllers[tester] as Controllers.AIMinimax).MoveSelector = new MoveSelectors.Best();
             (game.PlayerControllers[tester] as Controllers.AIMinimax).Weighting = new Weighting.TieredWeightingCompressed_R2();
             (game.PlayerControllers[teste] as Controllers.AIMinimax).AlterWeighting = null;
 
-            //AITest.AIWeightingGauntlet(game, 100, teste, weighting_tests);
+            AITest.AIWeightingGauntlet(game, 100, teste, weighting_tests);
 
-            (game.PlayerControllers[tester] as Controllers.AIMinimax).MoveSelector = new MoveSelectors.Adaptive_V3_R9();
+            weighting_tests = new List<Weighting.WeightingBase>()
+            {
+                new Weighting.DiskDifference(),
+                new Weighting.FrontierDiskRatio(),
+                new Weighting.StableDiskRatio()
+            };
+
+            (Game.PlayerControllers[teste] as Controllers.AIMinimax).Depth = 7;
+            (Game.PlayerControllers[tester] as Controllers.AIMinimax).FullSolvePoint = 8;
+            (Game.PlayerControllers[teste] as Controllers.AIMinimax).FullSolvePoint = 8;
+
+            AITest.AIWeightingGauntlet(game, 100, teste, weighting_tests);
+
+            weighting_tests = new List<Weighting.WeightingBase>()
+            {
+                new Weighting.DiskDifference(),
+                //new Weighting.FrontierDiskRatio(),
+                //new Weighting.StableDiskRatio()
+            };
+
+            (Game.PlayerControllers[teste] as Controllers.AIMinimax).Depth = 8;
+            (Game.PlayerControllers[tester] as Controllers.AIMinimax).FullSolvePoint = 8;
+            (Game.PlayerControllers[teste] as Controllers.AIMinimax).FullSolvePoint = 8;
+
+            AITest.AIWeightingGauntlet(game, 100, teste, weighting_tests);
+
+
+
+            weighting_tests = new List<Weighting.WeightingBase>()
+            {
+                new Weighting.DiskDifference(),
+                new Weighting.FrontierDiskRatio(),
+                new Weighting.StableDiskRatio(),
+                new Weighting.TieredWeighting(),
+                new Weighting.TieredWeightingCompressed_R2()
+            };
+
+            (Game.PlayerControllers[tester] as Controllers.AIMinimax).MoveTrimTo = 6;
+            (Game.PlayerControllers[teste] as Controllers.AIMinimax).MoveTrimTo = 6;
+            (Game.PlayerControllers[tester] as Controllers.AIMinimax).Depth = 6;
+            (Game.PlayerControllers[teste] as Controllers.AIMinimax).Depth = 6;
+            (Game.PlayerControllers[tester] as Controllers.AIMinimax).FullSolvePoint = 8;
+            (Game.PlayerControllers[teste] as Controllers.AIMinimax).FullSolvePoint = 8;
+
+            (game.PlayerControllers[teste] as Controllers.AIMinimax).MoveSelector = new MoveSelectors.Best();
+            (game.PlayerControllers[teste] as Controllers.AIMinimax).Weighting = new Weighting.TieredWeightingCompressed_R2();
+            (game.PlayerControllers[tester] as Controllers.AIMinimax).AlterWeighting = null;
+            (game.PlayerControllers[teste] as Controllers.AIMinimax).AlterWeighting = null;
+
+            AITest.AIWeightingGauntlet(game, 100, tester, weighting_tests);
+
+            (game.PlayerControllers[teste] as Controllers.AIMinimax).MoveSelector = new MoveSelectors.Adaptive_V4_R8();
+            (game.PlayerControllers[tester] as Controllers.AIMinimax).AlterWeighting = new Weighting.TieredWeightingCompressed_R2();
+
+            AITest.AIWeightingGauntlet(game, 100, tester, weighting_tests);
+
+            Environment.Exit(0);
+            (game.PlayerControllers[tester] as Controllers.AIMinimax).MoveSelector = new MoveSelectors.Adaptive_V4_R8();
             (game.PlayerControllers[teste] as Controllers.AIMinimax).AlterWeighting = new Weighting.TieredWeightingCompressed_R2();
 
             //AITest.AIPerformanceTest(false, -1, game, 401);
@@ -156,15 +224,9 @@ namespace OthelloGame
             return;
 #endif
 
-            //this.Background = Brushes.Black;
-            //GameGrid.Background = (SolidColorBrush)new BrushConverter().ConvertFrom("#8911BF00");
-
-            //p0.Pause = false;
             var game_render = new GameRender(this, GameGrid, lblDebugInfo, game);
             Game = game;
             GameRender = game_render;
-            game_render.DrawControllerData = true;
-
 
 #if AI_DEBUG_MODE
             Game.Start();
@@ -175,29 +237,6 @@ namespace OthelloGame
                 StartWithSettings();
             else
                 ShowControllerPicker();
-
-            //game.Start();
-            // p1.Depth = 13;
-            //            game.Move(19);
-
-            //return;
-
-            //p0.Pause = false;
-            //p1.Pause = false;
-
-            //var sw = new System.Diagnostics.Stopwatch();
-            //sw.Start();
-
-            //for (var i = 0; i < 101; i++)
-            //{
-            //    game.Start();
-            //    game.Restart();
-            //}
-            //sw.Stop();
-
-            //MessageBox.Show("Game Over, winner:" + game.Winner.ToString() + "; finished in " + sw.ElapsedMilliseconds.ToString() + "ms");
-
-            //this.Close();
         }
 
         public Game Game { get; private set; }
@@ -294,6 +333,16 @@ namespace OthelloGame
             var btn = (Button)sender;
             ctmMain.PlacementTarget = btn;
             ctmMain.IsOpen = true;
+        }
+
+        private void MenuItem_Click_3(object sender, RoutedEventArgs e)
+        {
+            grdHelp.Visibility = System.Windows.Visibility.Visible;
+        }
+
+        private void Button_Click_4(object sender, RoutedEventArgs e)
+        {
+            grdHelp.Visibility = System.Windows.Visibility.Collapsed;
         }
     }
 }

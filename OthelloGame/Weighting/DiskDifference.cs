@@ -6,9 +6,12 @@ using System.Threading.Tasks;
 
 namespace OthelloGame.Weighting
 {
-    class DiskDifference : Weighting.WeightingBase
+    /// <summary>
+    /// Very naive approach; attempts to have the most number of disks, relative to it's opponent, at all times.
+    /// </summary>
+    class DiskDifference : Weighting.IWeighting
     {
-        public override int Do(OthelloGame.Game game, int player)
+        public int Do(OthelloGame.Game game, int player)
         {
             var us = player;
             var them = game.OtherPlayer(us);

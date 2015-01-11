@@ -15,18 +15,18 @@ namespace OthelloGame
 
         }
 
-        public static void AISupertest(Game game, int times, Weighting.WeightingBase weighting_algorithm)
+        public static void AISupertest(Game game, int times, Weighting.IWeighting weighting_algorithm)
         {
             AIChecklistTest(game, times, 0, weighting_algorithm);
             AIChecklistTest(game, times, 1, weighting_algorithm);
         }
 
-        public static void AIChecklistTest(Game game, int times, int side, Weighting.WeightingBase weighting_algorithm)
+        public static void AIChecklistTest(Game game, int times, int side, Weighting.IWeighting weighting_algorithm)
         {
             var tester = side;
             var teste = game.OtherPlayer(side);
 
-            var weighting_tests = new List<Weighting.WeightingBase>()
+            var weighting_tests = new List<Weighting.IWeighting>()
             {
                 new Weighting.DiskDifference(),
                 new Weighting.FrontierDiskRatio(),
@@ -48,7 +48,7 @@ namespace OthelloGame
             AITest.AIWeightingGauntlet(game, times, teste, weighting_tests);
         }
 
-        public static void AIWeightingGauntlet(Game game, int times_per_test, int swap_side, List<Weighting.WeightingBase> testers)
+        public static void AIWeightingGauntlet(Game game, int times_per_test, int swap_side, List<Weighting.IWeighting> testers)
         {
             foreach (var weigher in testers)
             {

@@ -6,21 +6,12 @@ using System.Threading.Tasks;
 
 namespace OthelloGame.Weighting
 {
-    class TieredWeightingCompressed_R2 : WeightingBase
+    /// <summary>
+    /// Chosen weighting algorithm, the same as Tiered Weighting except the multipliers are much smaller, to the point where a lower tier could override an upper tier.
+    /// </summary>
+    class TieredWeightingCompressed_R2 : IWeighting
     {
-        public override int GetDepth(Controllers.AIMinimax ai)
-        {
-            if (ai.MoveTrimming)
-            {
-                return 4;
-            }
-            else
-            {
-                return 4;
-            }
-        }
-
-        public override int Do(OthelloGame.Game game, int player)
+        public int Do(OthelloGame.Game game, int player)
         {
             var them = game.OtherPlayer(player);
             var us = player;

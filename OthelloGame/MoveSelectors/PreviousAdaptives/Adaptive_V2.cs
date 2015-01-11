@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace OthelloGame.MoveSelectors
 {
+    /// <remarks>Has not undergone cleanup or commenting.</remarks>
     class Adaptive_V2_R2 : IMoveSelector
     {
         public int Select(SortedDictionary<int, Dictionary<int, Minimax.MoveInfo>> moves_by_weight, Game game)

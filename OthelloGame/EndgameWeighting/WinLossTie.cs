@@ -9,9 +9,9 @@ namespace OthelloGame.EndgameWeighting
     /// <summary>
     /// Simple endgame weighting which returns Globals.WIN, TIE, or LOSS depending upon the game's outcome and the provided player number.
     /// </summary>
-    class WinLossTie : EndgameWeightingBase
+    class WinLossTie : IEndgameWeighting
     {
-        public override int Do(OthelloGame.Game game, int player)
+        public int Do(OthelloGame.Game game, int player)
         {
             if (game.Winner == player)
                 return Globals.WIN;

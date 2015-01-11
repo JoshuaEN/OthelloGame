@@ -4,10 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OthelloGame.EndgameWeighting
+namespace OthelloGame.Weighting
 {
     /// <summary>
-    /// Base for endgame weighting code.
+    /// Interface for Weighting.
     /// </summary>
-    public abstract class EndgameWeightingBase : Weighting.WeightingBase { }
+    public interface IWeighting
+    {
+        int Do(OthelloGame.Game game, int player);
+    }
 }

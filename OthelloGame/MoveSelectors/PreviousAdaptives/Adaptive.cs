@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace OthelloGame.MoveSelectors
 {
-    class Adaptive_R21_EM : IMoveSelector
+    /// <summary>
+    /// Original Adaptive move selector.
+    /// </summary>
+    /// <remarks>Has not undergone cleanup or commenting.</remarks>
+    class Adaptive_R21 : IMoveSelector
     {
         public int Select(SortedDictionary<int, Dictionary<int, Minimax.MoveInfo>> moves_by_weight, Game game)
         {
@@ -24,7 +28,7 @@ namespace OthelloGame.MoveSelectors
             if (controller.OppoentMoveData.Count >= lookback_min)
             {
 
-                double data_avg = controller.OppoentMoveData.GetRange(controller.OppoentMoveData.Count - lookback_target, lookback_target).Select(v =>
+                double data_avg = controller.OppoentMoveData.GetRange(controller.OppoentMoveData.Count - lookback_target, lookback_target).Select(v => 
                     v.chosen_dev_weight * (1.0 - v.prob_picked) * v.prob_better
                 ).Average();
 
@@ -51,16 +55,14 @@ namespace OthelloGame.MoveSelectors
 
             if (board_solved)
             {
-                return moves_by_weight.Last().Key;
-
                 for (var i = moves_by_weight.Count - 1; i >= 0; i--)
                 {
                     var item = moves_by_weight.ElementAt(i);
-                    if (best_weight == int.MinValue)
+                    if(best_weight == int.MinValue)
                     {
                         best_weight = item.Key;
                     }
-                    else if (item.Key > Globals.WIN)
+                    else if(item.Key > Globals.WIN)
                     {
                         best_weight = item.Key;
                     }
@@ -95,4 +97,3 @@ namespace OthelloGame.MoveSelectors
 
 
 }
-

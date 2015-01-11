@@ -9,11 +9,11 @@ namespace OthelloGame.EndgameWeighting
     /// <summary>
     /// Returns the number of pieces being won or lost by, added to the base endgame weighting value.
     /// </summary>
-    class DiskMaximizing : EndgameWeightingBase
+    class DiskMaximizing : IEndgameWeighting
     {
         private static readonly WinLossTie win_loss_tie = new WinLossTie();
 
-        public override int Do(OthelloGame.Game game, int player)
+        public int Do(OthelloGame.Game game, int player)
         {
             // Get the base result value.
             var baseline = win_loss_tie.Do(game, player);
@@ -26,10 +26,12 @@ namespace OthelloGame.EndgameWeighting
                 baseline += counts.nil;
 
             // -1 indicates a tie.
-            if (game.Winner != -1)
-                return baseline + (counts[player] * 10);
-            else
+            if (game.Winner == -1)
                 return baseline;
+            else if(game.Winner == player)
+                return baseline + counts[player];
+            else
+                return baseline + counts[player] - game.Board.Length * 2;
         }
     }
 }

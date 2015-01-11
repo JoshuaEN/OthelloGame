@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace OthelloGame.MoveSelectors
 {
+    /// <summary>
+    /// Picks a move weight at random.
+    /// </summary>
     public class RandomMove : IMoveSelector
     {
 #if FIXED_RNG

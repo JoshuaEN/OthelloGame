@@ -108,12 +108,12 @@ namespace OthelloGame.Controllers
         /// <summary>
         /// Class used to weight non-terminal board states.
         /// </summary>
-        public Weighting.WeightingBase Weighting { get; set; }
+        public Weighting.IWeighting Weighting { get; set; }
 
         /// <summary>
         /// Class used to weight terminal board states.
         /// </summary>
-        public EndgameWeighting.EndgameWeightingBase EndgameWeighting { get; set; }
+        public EndgameWeighting.IEndgameWeighting EndgameWeighting { get; set; }
 
         /// <summary>
         /// Class used to select a move given data about all valid moves.
@@ -377,9 +377,8 @@ namespace OthelloGame.Controllers
         private Minimax GetMinimaxInstance()
         {
             var minimax = new Minimax(Player, LastTranspositionTable);
-            minimax.Tiebreak = this.Tiebreak.Do;
-            minimax.Weighting = this.Weighting.Do;
-            minimax.EndgameWeighting = this.EndgameWeighting.Do;
+            minimax.Weighting = this.Weighting;
+            minimax.EndgameWeighting = this.EndgameWeighting;
 
             return minimax;
         }
@@ -429,7 +428,7 @@ namespace OthelloGame.Controllers
         public override string UniqueIdentString()
         {
             return
-                "AIMinimax|0.31|C#||" +
+                "AIMinimax|0.34|C#||" +
                 "MoveTrimming:" + MoveTrimming + ";" +
                 "MoveTrimTo:" + MoveTrimTo + ";" +
                 "Depth:" + Depth + ";" +
@@ -491,7 +490,7 @@ namespace OthelloGame.Controllers
 
         #region Data-gathering code for adaptive AI
 
-        public Weighting.WeightingBase AlterWeighting { get; set; }
+        public Weighting.IWeighting AlterWeighting { get; set; }
         public Minimax.MinimaxDataSet AltLastMinimaxResult { get; private set; }
 
         public List<MoveEvalData> OppoentMoveData { get; set; }
