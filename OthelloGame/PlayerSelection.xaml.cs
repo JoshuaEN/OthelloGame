@@ -26,6 +26,8 @@ namespace OthelloGame
             InitializeComponent();
         }
 
+        #region DependencyProperties
+
         public static readonly DependencyProperty IsAIProperty = DependencyProperty.Register(
           "IsAI",
           typeof(bool),
@@ -168,8 +170,16 @@ namespace OthelloGame
             }
         }
 
+        #endregion
+
         public Settings Settings { get { return Globals.Settings; } }
 
+        /// <summary>
+        /// Returns a new controller based off of the current player selection settings using the given Game and Player.
+        /// </summary>
+        /// <param name="game">Game for the controller.</param>
+        /// <param name="player">The player for the controller to play as.</param>
+        /// <returns></returns>
         public Controllers.AIMinimax GetController(Game game, int player)
         {
             var controller = new Controllers.AIMinimax(game, player);
@@ -214,8 +224,8 @@ namespace OthelloGame
             var v = (int)e.NewValue;
 
             lblAIDiffReadout.Content = v;
-            //return;
 
+            // I couldn't think of any good naming approach that would cover a name for each value.
             //if (v < 2)
             //    lblAIDiffReadout.Content = "Lowest";
             //else if (v == 2)

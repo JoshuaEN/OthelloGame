@@ -106,7 +106,7 @@ namespace OthelloGame
             (game.PlayerControllers[teste] as Controllers.AIMinimax).MoveSelector = new MoveSelectors.Adaptive_V4_R8_EM();
             (game.PlayerControllers[tester] as Controllers.AIMinimax).AlterWeighting = new Weighting.TieredWeightingCompressed_R2();
 
-            AITest.AIWeightingGauntlet(game, 100, tester, weighting_tests);
+            //AITest.AIWeightingGauntlet(game, 100, tester, weighting_tests);
 
 
             (game.PlayerControllers[teste] as Controllers.AIMinimax).MoveSelector = new MoveSelectors.Best();

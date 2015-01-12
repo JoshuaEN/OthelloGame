@@ -44,14 +44,10 @@ namespace OthelloGame.MoveSelectors
 
                 // How far to look back into the move history for our own moves.
                 // As an aside, no, I didn't intend for this mismatch in data to occur (the lookback_target assignment above used to be somewhere else). 
-                // However, as I write this comment, it's a bit too late to go back and rerun all of the tests.
-                // Though, this is actually quite interesting, as it effectively means there's a bias being created as time goes on,
-                // which means the deeper into the game we get, the less inclined the AI will be to make poor moves.
-                // This does explain why it seems to trend towards a lower handicap towards the end of the game.
-                // Though, what's interesting is that while I suspect this tends to protect it more than anything,
-                // in the case of the stable disk ratio algorithm, I think it works against it.
-                // That algorithm tends to build up all of this handicap early on then starts to play well later,
-                // this later good play has a hard time offsetting the much poorer early game play.
+                // However, it seems that this accident produces a much better result than if this too is constrained to 20.
+                // I think it's more related to the fact the Adaptive AI needs to scale back how much its willing to give up,
+                // later in the game to protect itself from losing more, as this is an imperfect solution that is
+                // leading to the much lower win-rate against the Stable Disk Ratio weighting.
                 var other_lookback_target = other_controller.OppoentMoveData.Count;
 
 
@@ -66,7 +62,7 @@ namespace OthelloGame.MoveSelectors
 
                 double o_theirs = controller.OppoentMoveData.GetRange(controller.OppoentMoveData.Count - lookback_target, lookback_target).Select(o_func).Average();
                 double o_ours = other_controller.OppoentMoveData.GetRange(other_controller.OppoentMoveData.Count - other_lookback_target, other_lookback_target).Select(o_func).Average();
-                double o_data_avg = o_theirs;// - o_ours);
+                double o_data_avg = o_theirs;
 
                 handicap = data_avg;
                 prob_handicap = o_theirs;
