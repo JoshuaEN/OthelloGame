@@ -45,13 +45,14 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Final|AnyCPU'">
     <OutputPath>bin\Final\</OutputPath>
-    <DefineConstants>CHEATS DEBUG_STATS_ONLY</DefineConstants>
+    <DefineConstants>
+    </DefineConstants>
     <Optimize>true</Optimize>
     <DebugType>pdbonly</DebugType>
-    <PlatformTarget>x86</PlatformTarget>
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <Prefer32Bit>true</Prefer32Bit>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>Icon.ico</ApplicationIcon>
@@ -96,8 +97,6 @@
     <Compile Include="Exceptions\OthelloGameExceptionBase.cs" />
     <Compile Include="MoveSelectors\Adaptive_V4.cs" />
     <Compile Include="MoveSelectors\Adaptive_V4_EM.cs" />
-    <Compile Include="MoveSelectors\Adaptive_V4_R9.cs" />
-    <Compile Include="MoveSelectors\Adaptive_V4_R9_EM.cs" />
     <Compile Include="MoveSelectors\Best.cs" />
     <Compile Include="MoveSelectors\IMoveSelector.cs" />
     <Compile Include="MoveSelectors\RandomErrors\RandomErrorBase.cs" />

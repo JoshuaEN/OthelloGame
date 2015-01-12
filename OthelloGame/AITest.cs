@@ -13,11 +13,6 @@ namespace OthelloGame
     /// </summary>
     public static class AITest
     {
-        public static void AIPerformanceCalibaration()
-        {
-
-        }
-
 
         public static void AIWeightingGauntlet(Game game, int times_per_test, int swap_side, List<Weighting.IWeighting> testers)
         {
@@ -45,6 +40,7 @@ namespace OthelloGame
 
         public static void AIPerformanceTest(bool verification_run, int verification_set, Game game, int times)
         {
+            // Need to pause to record results after each move.
             SetControllerPause(game, true);
 
             while (times > 0)
@@ -97,6 +93,11 @@ namespace OthelloGame
             }
         }
 
+        /// <summary>
+        /// Helper to ensure all player controllers, if AI, are set to pause.
+        /// </summary>
+        /// <param name="game"></param>
+        /// <param name="pause"></param>
         private static void SetControllerPause(Game game, bool pause)
         {
             for (var i = 0; i < game.PlayerControllers.Length; i++)
@@ -127,6 +128,9 @@ namespace OthelloGame
             }
         }
 
+        /// <summary>
+        /// Match result to be sent.
+        /// </summary>
         public class MatchResult
         {
             public MatchResult()

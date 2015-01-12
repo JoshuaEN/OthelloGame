@@ -29,7 +29,7 @@ namespace OthelloGame
 
             Game game = new Game(8);
 
-#if RUN_TESTS || AI_DEBUG_MODE
+#if AI_DEBUG_MODE
             var pause = true;
             var depth = 6;
             var optimizing_depth = 2;
@@ -71,62 +71,6 @@ namespace OthelloGame
 #if DEBUG_STATS_ONLY || DEBUG
             lblDebugInfo.Visibility = System.Windows.Visibility.Visible;
             btnTreeview.Visibility = System.Windows.Visibility.Visible;
-
-#endif
-
-#if RUN_TESTS
-
-            var tester = 0;
-            var teste = game.OtherPlayer(0);
-
-            Game = game;
-
-
-            var weighting_tests = new List<Weighting.IWeighting>()
-            {
-                new Weighting.DiskDifference(),
-                new Weighting.FrontierDiskRatio(),
-                new Weighting.StableDiskRatio(),
-                new Weighting.TieredWeighting(),
-                new Weighting.TieredWeightingCompressed_R2()
-            };
-
-            (game.PlayerControllers[teste] as Controllers.AIMinimax).MoveSelector = new MoveSelectors.Best();
-            (game.PlayerControllers[tester] as Controllers.AIMinimax).MoveSelector = new MoveSelectors.Best();
-            (game.PlayerControllers[teste] as Controllers.AIMinimax).Weighting = new Weighting.TieredWeightingCompressed_R2();
-            (game.PlayerControllers[tester] as Controllers.AIMinimax).Weighting = new Weighting.TieredWeightingCompressed_R2();
-            (game.PlayerControllers[tester] as Controllers.AIMinimax).AlterWeighting = null;
-            (game.PlayerControllers[teste] as Controllers.AIMinimax).AlterWeighting = null;
-
-            (game.PlayerControllers[teste] as Controllers.AIMinimax).MoveSelector = new MoveSelectors.Adaptive_V4_R8_EM();
-            (game.PlayerControllers[tester] as Controllers.AIMinimax).AlterWeighting = new Weighting.TieredWeightingCompressed_R2();
-
-            //AITest.AIWeightingGauntlet(game, 100, tester, weighting_tests);
-
-            (game.PlayerControllers[teste] as Controllers.AIMinimax).MoveSelector = new MoveSelectors.Adaptive_V4_R8_EM();
-            (game.PlayerControllers[tester] as Controllers.AIMinimax).AlterWeighting = new Weighting.TieredWeightingCompressed_R2();
-
-            //AITest.AIWeightingGauntlet(game, 100, tester, weighting_tests);
-
-
-            (game.PlayerControllers[teste] as Controllers.AIMinimax).MoveSelector = new MoveSelectors.Best();
-            (game.PlayerControllers[tester] as Controllers.AIMinimax).MoveSelector = new MoveSelectors.Best();
-            (game.PlayerControllers[teste] as Controllers.AIMinimax).Weighting = new Weighting.TieredWeightingCompressed_R2();
-            (game.PlayerControllers[tester] as Controllers.AIMinimax).Weighting = new Weighting.TieredWeightingCompressed_R2();
-            (game.PlayerControllers[tester] as Controllers.AIMinimax).AlterWeighting = null;
-            (game.PlayerControllers[teste] as Controllers.AIMinimax).AlterWeighting = null;
-
-            (game.PlayerControllers[tester] as Controllers.AIMinimax).MoveSelector = new MoveSelectors.Adaptive_V4_R8_EM();
-            (game.PlayerControllers[teste] as Controllers.AIMinimax).AlterWeighting = new Weighting.TieredWeightingCompressed_R2();
-
-            //AITest.AIWeightingGauntlet(game, 100, teste, weighting_tests);
-
-            (game.PlayerControllers[tester] as Controllers.AIMinimax).MoveSelector = new MoveSelectors.Adaptive_V4_R8_EM();
-            (game.PlayerControllers[teste] as Controllers.AIMinimax).AlterWeighting = new Weighting.TieredWeightingCompressed_R2();
-
-            AITest.AIWeightingGauntlet(game, 100, teste, weighting_tests);
-
-            Environment.Exit(0);
 #endif
 
             var game_render = new GameRender(this, GameGrid, lblDebugInfo, game);
@@ -149,26 +93,9 @@ namespace OthelloGame
 
         public Settings Settings { get { return Globals.Settings;  } }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-#if DEBUG
-            if (Game.ActivePlayerController is Controllers.AIMinimax)
-            {
-                MinimaxTreeView viewer = new MinimaxTreeView();
-                viewer.view_tree(((Controllers.AIMinimax)Game.ActivePlayerController).LastMinimaxResult);
-                viewer.Show();
-            }
-            else
-            {
-                MessageBox.Show("Not available for active player controller!");
-            }
-#else
-            MessageBox.Show("Not available; compile with DEBUG defined to enable this feature.");
-    
-#endif
-
-        }
-
+        /// <summary>
+        /// Toggles overlay, doesn't actually work because the UI thread waits.
+        /// </summary>
         public bool Overlay
         {
             set
@@ -202,6 +129,10 @@ namespace OthelloGame
             grdSetup.Visibility = System.Windows.Visibility.Collapsed;
             grdMainGame.Visibility = System.Windows.Visibility.Visible;
         }
+
+        #region Button Click Handlers and Other Event Handlers
+
+        // I really should have specified names for these handlers rather than using the ones generated by Visual Studio.
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
@@ -249,5 +180,27 @@ namespace OthelloGame
         {
             grdHelp.Visibility = System.Windows.Visibility.Collapsed;
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+#if DEBUG
+            if (Game.ActivePlayerController is Controllers.AIMinimax)
+            {
+                MinimaxTreeView viewer = new MinimaxTreeView();
+                viewer.view_tree(((Controllers.AIMinimax)Game.ActivePlayerController).LastMinimaxResult);
+                viewer.Show();
+            }
+            else
+            {
+                MessageBox.Show("Not available for active player controller!");
+            }
+#else
+            MessageBox.Show("Not available; compile with DEBUG defined to enable this feature.");
+
+#endif
+
+        }
+
+        #endregion
     }
 }
