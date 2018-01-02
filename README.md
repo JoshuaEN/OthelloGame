@@ -2,13 +2,13 @@
 
 Letter Grade: A
 
-The goal of this project was to create a Computer Player for the game Othello who's goal was to achieve victory by the smallest margin (one disk).
+A Computer Player for the game Othello whose goal is to achieve victory by the smallest margin (one disk).
 
-Effectively, the intent was to have the Computer Player toy with its opponent, creating the illusion of a close game but always winning.
+The intent being to have the Computer Player toy with its opponent, creating the illusion of a close game but always winning.
 
 ---
 
-Towards this goal, the Computer Player in testing only achieved its goal 1% of the time.
+Towards this goal, the current version of the Computer Player in testing only achieved its goal 1% of the time.
 
 Looking at the test data, I determined winning by any odd number was rare, having occurred only 6% of the time. Looking at wins by two disks (the lowest even number), the success rate of the Computer Player increased to 25%.
 
